@@ -1,0 +1,9 @@
+{
+	name: 'Small'
+	,model: { somevar: 'a', anothervar: 'b' }
+}
+---
+<div class="widget">
+	<p>@model.somevar</p>
+	<p>@model.anothervar</p>
+</div>

@@ -1,0 +1,31 @@
+{
+  "name": "vash-benchgraph",
+  "version": "0.0.1",
+  "description": "Perform consistent benchmarks over time against each NPM/local version of Vash",
+  "main": "benches.js",
+  "dependencies": {
+    "wrench": "~1.4.3",
+    "benchmark": "~1.0.0",
+    "semver": "~1.1.1",
+    "diff": "~1.0.4",
+    "lodash": "~1.0.0-rc.2",
+    "commander": "~1.1.1",
+    "cli-color": "~0.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "main": "node benches.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "willhavegit"
+  },
+  "keywords": [
+    "vash",
+    "razor",
+    "template",
+    "benchmark"
+  ],
+  "author": "Andrew Petersen",
+  "license": "MIT"
+}
