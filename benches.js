@@ -255,7 +255,7 @@ program
 	.option('-vs, --versions', 'Output valid vash versions and exit', false)
 
 	// output options
-	.option('-c, --chart [columns]', 'Output a chart instead of JSON, with optional comma-delimited column names: vashv,bar,ops,rme,percent,om,xfast', splitVersions, false)
+	.option('-c, --chart [columns]', 'Output a chart instead of JSON, with optional comma-delimited column names: vashv,bar,ops,rme,percent,om,xfast. Set to false to output JSON instead', splitVersions, ['vashv','bar','ops','rme','percent'])
 	.option('-d, --dump', 'Output the decompiled templates without benchmarking', false)
 	.option('-dc, --diffcompiled', 'Diff the decompiled templates without benchmarking', false)
 	.option('-vf, --verify', 'Diff the rendered template output instead of benchmarking, using newest version as base', false)
@@ -263,7 +263,6 @@ program
 	.option('-v, --verbose', 'More output', false)
 
 // TODO: add --compile option, to bench compile times
-// TODO: enable setting path to a local copy of vash for dev comparison
 // TOOD: try forking each benchmark for multicore, for sake of duration
 
 program.parse(process.argv);
