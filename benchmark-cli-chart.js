@@ -8,7 +8,7 @@ var BenchmarkCliChart = module.exports = function( suite, options ){
 	this.options = options || {};
 	this.suite = suite;
 
-	if( this.options.fields ){
+	if( this.options.fields && this.options.fields.length ){
 		var fields = {};
 		this.options.fields.forEach(function(f){
 			fields[f] = true;
@@ -36,7 +36,7 @@ BenchmarkCliChart.prototype = {
 		this.headerColumn( columns, 'ops', 'ops/sec', 20 );
 		this.headerColumn( columns, 'rme', 'relative error margin', '5%' );
 		this.headerColumn( columns, 'percent', '% slower', '7%' );
-		this.headerColumn( columns, 'om', 'orders of magnitude', '6%' );
+		this.headerColumn( columns, 'om', 'magnitude', '6%' );
 		this.headerColumn( columns, 'xfast', 'times faster than the slowest', '7%' );
 
 		process.stdout.write( '\r' );
@@ -66,7 +66,7 @@ BenchmarkCliChart.prototype = {
 				,barWidth = ~~( phz * table.column( 'bar' ).innerWidth() )
 				,bar = Array( barWidth + 1 ).join('\u25CF')
 				,cb = Table.I
-				,om = self.ordersSlower( fastestHz, bench.hz )
+				,om = self.magnitude( bench.hz )
 				,xFaster = xFastest - self.xFaster( fastestHz, bench.hz )
 
 				,columns = []
@@ -82,7 +82,7 @@ BenchmarkCliChart.prototype = {
 			self.dataColumn( columns, 'ops', utils.humanize( ~~bench.hz ) + ' ops/s' );
 			self.dataColumn( columns, 'rme', '+/-' + bench.stats.rme.toFixed(2) );
 			self.dataColumn( columns, 'percent', pslow >= 1 ? ~~pslow + '% slower' : '' );
-			self.dataColumn( columns, 'om', om > 0 ? om + ' order' + (om === 1 ? '' : 's') : '' );
+			self.dataColumn( columns, 'om', om + ' mag' );
 			self.dataColumn( columns, 'xfast', xFaster > 1 ? xFaster + 'x faster' : '' );
 
 			table.addRow( columns );
@@ -95,16 +95,10 @@ BenchmarkCliChart.prototype = {
 		return ~~(fastest / slowest)
 	}
 
-	,ordersSlower: function( fastest, slowest ){
+	,magnitude: function( slowest ){
 
-		if( fastest === slowest ) return 0;
-
-		var  forder = (~~fastest + '').length
-			//,diff = ~~(fastest - slowest)
-			//,sorder = diff > 0 ? ( diff + '').length : 0
-			,sorder = (~~slowest + '').length
-
-		return forder - sorder;
+		var sorder = Math.log(slowest)/Math.LN10
+		return sorder.toFixed(1);
 	}
 
 	,headerColumn: function( columns, key, title, width ){
